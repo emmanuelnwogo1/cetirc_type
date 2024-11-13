@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const businessController_1 = require("../controllers/business/businessController");
+const authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
+const businessProfileController_1 = require("../controllers/business/businessProfileController");
+const businessSmartLockController_1 = require("../controllers/business/businessSmartLockController");
+const multer_1 = __importDefault(require("multer"));
+const router = (0, express_1.Router)();
+const upload = (0, multer_1.default)({ dest: 'business_images/' });
+router.post('/nearby/', authMiddleware_1.default, businessController_1.nearbyBusinessesController);
+router.post('/register_business', businessController_1.businessRegisterController);
+router.put('/update_business_profile/:business_id/', businessController_1.updateBusinessProfileController);
+router.get('/business_location', businessController_1.getBusinessLocation);
+router.post('/nearest-businesses', businessController_1.getNearestBusinessesController);
+router.get('/business_profile', authMiddleware_1.default, businessProfileController_1.fetchBusinessProfileDetails);
+router.post('/business-smart-lock-signup', authMiddleware_1.default, businessSmartLockController_1.signUpBusinessSmartLockController);
+router.get('/business-smart-locks', authMiddleware_1.default, businessSmartLockController_1.fetchBusinessSmartLocks);
+router.post('/grant-access-business/:businessType', authMiddleware_1.default, businessSmartLockController_1.grantSmartLockAccessToBusinessController);
+router.post('/add-smart-lock', authMiddleware_1.default, businessSmartLockController_1.addSmartLockController);
+router.patch('/business-profile-image/', authMiddleware_1.default, upload.single('image'), businessProfileController_1.updateBusinessProfileImageController);
+exports.default = router;

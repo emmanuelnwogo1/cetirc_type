@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Card</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .form-wrapper {
+      width: 400px;
+      text-align: center;
+    }
+
+    #payment-form {
+        margin: 0 auto;
+      width: 90%;
+    }
+
+    .StripeElement {
+      padding: 10px;
+      border: 1px solid #555;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #submit, #cancel {
+      padding: 10px;
+      background-color: #222;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #submit {
+        display: block;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    #cancel {
+        display: block;
+        width: 100%;
+      margin-top: 10px;
+      background-color: white;
+      color: #555;
+      border: 1px solid #555;
+    }
+
+    .card-logos {
+      margin: 0;
+    }
+
+    .card-logos img {
+      width: 100%;
+      max-width: 250px;
+      height: 170px;
+      margin: 0 auto;
+    }
+
+    form {
+      display: block;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      color: #000;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-wrapper">
+    
+    <form id="payment-form">
+      <label for="card-number">Card Number</label>
+      <div id="card-number" class="StripeElement"></div>
+
+      <label for="card-expiry">Expiration Date</label>
+      <div id="card-expiry" class="StripeElement"></div>
+
+      <label for="card-cvc">CCV/CVV</label>
+      <div id="card-cvc" class="StripeElement"></div>
+
+      <label for="postal-code">Postal Code</label>
+      <div id="postal-code" class="StripeElement"></div>
+
+      <button id="submit" type="button">Add Card</button>
+      <button id="cancel" type="button">Cancel</button>
+    </form>
+  </div>
+
+  <script>
+    const stripe = Stripe('pk_test_51PDH8BHSAfLK2YPFOrQj2AQRh68SsbDtSnDIDP4UgZgfuJmw9Gxue47VeWvoLrsFvB4CHCml0vDuHoCxgyg3ec2q00ovVA2GZS');
+    const elements = stripe.elements();
+  
+    const style = {
+      base: {
+        fontSize: '16px',
+        color: "#32325d",
+        '::placeholder': {
+          color: '#999',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+      },
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('update') === 'true') {
+        document.getElementById('submit').innerText = 'Update Card';
+    }
+  
+    const cardNumberElement = elements.create('cardNumber', { style });
+    const cardExpiryElement = elements.create('cardExpiry', { style });
+    const cardCvcElement = elements.create('cardCvc', { style });
+    const postalCodeElement = elements.create('postalCode', { style });
+  
+    cardNumberElement.mount('#card-number');
+    cardExpiryElement.mount('#card-expiry');
+    cardCvcElement.mount('#card-cvc');
+    postalCodeElement.mount('#postal-code');
+  
+    document.getElementById('submit').addEventListener('click', async () => {
+        const {error, token} = await stripe.createToken(cardNumberElement);
+
+        const {errorPaymentMethod, paymentMethod} = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardNumberElement,
+        });
+  
+      if (error) {
+        window.StripeChannel.postMessage(error.message);
+      } else {
+        const cardBrand = token.card.brand;
+        const last4Digits = token.card.last4;
+  
+        window.StripeChannel.postMessage(JSON.stringify({
+            submit: true,
+            stripe_payment_method_id: paymentMethod.id,
+            cardBrand: cardBrand,
+            last4Digits: last4Digits
+        }));
+      }
+    });
+  
+    document.getElementById('cancel').addEventListener('click', () => {
+        window.StripeChannel.postMessage(JSON.stringify({
+            cancel: true
+        }));
+    });
+  </script>
+  
+</body>
+</html>

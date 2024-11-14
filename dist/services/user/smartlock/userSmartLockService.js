@@ -19,11 +19,7 @@ class UserSmartLockService {
         return __awaiter(this, void 0, void 0, function* () {
             const smartLock = yield SmartLock_1.SmartLock.findOne({ where: { device_id: deviceId } });
             if (!smartLock) {
-                return {
-                    status: 'failed',
-                    message: 'Smart lock not found.',
-                    data: {}
-                };
+                throw new Error('Smart lock not found.');
             }
             var smartLockGroup = yield SmartLockGroup_1.SmartLockGroup.findOne({ where: { name: groupName } });
             if (!smartLockGroup) {

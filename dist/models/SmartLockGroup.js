@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SmartLockGroup = exports.BusinessType = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const SmartLock_1 = require("./SmartLock");
 var BusinessType;
 (function (BusinessType) {
     BusinessType["APARTMENT"] = "apartment";
@@ -37,9 +36,6 @@ __decorate([
     (0, sequelize_typescript_1.AllowNull)(true),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING)
 ], SmartLockGroup.prototype, "description", void 0);
-__decorate([
-    (0, sequelize_typescript_1.HasMany)(() => SmartLock_1.SmartLock)
-], SmartLockGroup.prototype, "smartLocks", void 0);
 exports.SmartLockGroup = SmartLockGroup = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'image_processing_app_smartlockgroup', timestamps: false })
 ], SmartLockGroup);

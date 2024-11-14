@@ -34,9 +34,6 @@ __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER)
 ], Notification.prototype, "user_id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => User_1.User)
-], Notification.prototype, "user", void 0);
 exports.Notification = Notification = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'image_processing_app_notification', timestamps: false })
 ], Notification);

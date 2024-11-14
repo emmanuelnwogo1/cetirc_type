@@ -15,9 +15,6 @@ const UserSmartLockAccess_1 = require("../models/UserSmartLockAccess");
 const BusinessSmartLock_1 = require("../models/BusinessSmartLock");
 const Room_1 = require("../models/Room");
 const Notification_1 = require("../models/Notification");
-const Permission_1 = require("../models/Permission");
-const Withdrawal_1 = require("../models/Withdrawal");
-const Transaction_1 = require("../models/Transaction");
 const sequelize = new sequelize_typescript_1.Sequelize({
     dialect: 'postgres',
     host: process.env.DB_HOST,
@@ -28,8 +25,7 @@ const sequelize = new sequelize_typescript_1.Sequelize({
     models: [User_1.User, BusinessProfile_1.BusinessProfile, BusinessDashboard_1.BusinessDashboard, PalmShare_1.PalmShare, TransactionHistory_1.TransactionHistory,
         PasswordResetRequest_1.PasswordResetRequest, Card_1.Card, UserProfile_1.UserProfile,
         SmartLock_1.SmartLock, SmartLockGroup_1.SmartLockGroup, UserSmartLockAccess_1.UserSmartLockAccess,
-        BusinessSmartLock_1.BusinessSmartLock, Room_1.Room, Notification_1.Notification, Permission_1.Permission,
-        Withdrawal_1.Withdrawal, Transaction_1.Transaction
+        BusinessSmartLock_1.BusinessSmartLock, Room_1.Room, Notification_1.Notification
     ],
 });
 exports.default = sequelize;

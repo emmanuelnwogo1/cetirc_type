@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUserController = exports.createUserController = exports.getUserByIdController = exports.getUsersController = exports.updateProfilePhotoController = exports.fetchUserProfileDetails = exports.editUserProfile = void 0;
+exports.updateProfilePhotoController = exports.fetchUserProfileDetails = exports.editUserProfile = void 0;
 const userService_1 = require("../../services/user/userService");
 const editUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.user.id;
@@ -68,50 +68,3 @@ const updateProfilePhotoController = (req, res) => __awaiter(void 0, void 0, voi
     }
 });
 exports.updateProfilePhotoController = updateProfilePhotoController;
-const getUsersController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const users = yield (0, userService_1.getUsers)();
-        res.status(200).json(users);
-    }
-    catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-});
-exports.getUsersController = getUsersController;
-const getUserByIdController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    try {
-        const user = yield (0, userService_1.getUserById)(id);
-        if (!user) {
-            res.status(404).json({ message: 'User not found.' });
-        }
-        else {
-            res.status(200).json(user);
-        }
-    }
-    catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-});
-exports.getUserByIdController = getUserByIdController;
-const createUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const newUser = yield (0, userService_1.createUser)(req.body);
-        res.status(201).json(newUser);
-    }
-    catch (error) {
-        res.status(400).json({ message: 'Bad request.' });
-    }
-});
-exports.createUserController = createUserController;
-const deleteUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    try {
-        yield (0, userService_1.deleteUser)(id);
-        res.status(204).send();
-    }
-    catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-});
-exports.deleteUserController = deleteUserController;

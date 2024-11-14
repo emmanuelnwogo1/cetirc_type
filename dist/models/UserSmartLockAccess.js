@@ -10,7 +10,6 @@ exports.UserSmartLockAccess = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const User_1 = require("./User");
 const SmartLock_1 = require("./SmartLock");
-const Room_1 = require("./Room");
 let UserSmartLockAccess = class UserSmartLockAccess extends sequelize_typescript_1.Model {
 };
 exports.UserSmartLockAccess = UserSmartLockAccess;
@@ -45,18 +44,8 @@ __decorate([
 ], UserSmartLockAccess.prototype, "period", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(true),
-    (0, sequelize_typescript_1.ForeignKey)(() => Room_1.Room),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER)
 ], UserSmartLockAccess.prototype, "room_id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => SmartLock_1.SmartLock)
-], UserSmartLockAccess.prototype, "smartLock", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => User_1.User)
-], UserSmartLockAccess.prototype, "user", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => Room_1.Room)
-], UserSmartLockAccess.prototype, "room", void 0);
 exports.UserSmartLockAccess = UserSmartLockAccess = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'image_processing_app_usersmartlockaccess', timestamps: false })
 ], UserSmartLockAccess);

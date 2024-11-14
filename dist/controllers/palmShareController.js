@@ -41,27 +41,16 @@ const palmShareController = (req, res) => __awaiter(void 0, void 0, void 0, func
 exports.palmShareController = palmShareController;
 const palmShareMemmebersController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User_1.User.findOne({
-            where: {
-                id: req.user.id
-            }
-        });
-        if (!user) {
-            return res.status(200).json({
-                status: 'failed',
-                message: 'User not found.',
-                data: {}
-            });
-        }
+        const user = yield User_1.User.findOne(req.user.id);
         const members = yield (0, palmShareService_1.getPalmShareMembers)(user.username);
-        return res.status(200).json({
+        res.status(200).json({
             status: 'success',
             message: 'PalmShare members retrieved successfully.',
             data: members
         });
     }
     catch (error) {
-        return res.status(404).json({
+        res.status(404).json({
             status: 'failed',
             message: error.message,
             data: {}
@@ -71,11 +60,7 @@ const palmShareMemmebersController = (req, res) => __awaiter(void 0, void 0, voi
 exports.palmShareMemmebersController = palmShareMemmebersController;
 const palmShareUpdateMemberController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const allowedUsername = req.params.allowed_username;
-    const user = yield User_1.User.findOne({
-        where: {
-            id: req.user.id
-        }
-    });
+    const user = yield User_1.User.findOne(req.user.id);
     try {
         const updateData = req.body;
         const updatedMember = yield (0, palmShareService_1.updatePalmShareMember)(allowedUsername, user, updateData);

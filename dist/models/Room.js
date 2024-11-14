@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Room = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const SmartLockGroup_1 = require("./SmartLockGroup");
-const SmartLock_1 = require("./SmartLock");
 let Room = class Room extends sequelize_typescript_1.Model {
 };
 exports.Room = Room;
@@ -38,9 +37,6 @@ __decorate([
 __decorate([
     (0, sequelize_typescript_1.BelongsTo)(() => SmartLockGroup_1.SmartLockGroup)
 ], Room.prototype, "smartLockGroup", void 0);
-__decorate([
-    (0, sequelize_typescript_1.HasMany)(() => SmartLock_1.SmartLock)
-], Room.prototype, "smartLocks", void 0);
 exports.Room = Room = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'image_processing_app_room', timestamps: false })
 ], Room);

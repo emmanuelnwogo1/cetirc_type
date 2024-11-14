@@ -88,6 +88,10 @@ __decorate([
 ], BusinessProfile.prototype, "iban", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(true),
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.BIGINT)
+], BusinessProfile.prototype, "dashboard_id", void 0);
+__decorate([
+    (0, sequelize_typescript_1.AllowNull)(true),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING(100))
 ], BusinessProfile.prototype, "closing_hours", void 0);
 __decorate([

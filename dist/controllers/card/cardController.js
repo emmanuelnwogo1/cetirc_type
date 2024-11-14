@@ -19,7 +19,7 @@ class CardController {
             const cardId = parseInt(req.params.id);
             const userId = req.user.id;
             const data = req.body;
-            console.log(data, cardId, userId);
+            console.log(userId);
             const result = yield cardService.updateCard(cardId, data, userId);
             if (result.status === "success") {
                 res.status(200).json(result);
@@ -47,32 +47,18 @@ class CardController {
     }
     addCard(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield User_1.User.findOne({
-                where: {
-                    id: req.user.id
-                }
-            });
-            console.log(req.user.id, user);
+            const user = yield User_1.User.findOne(req.user.id);
             const cardData = req.body;
             try {
-                const response = yield cardService.addCard(user, cardData);
-                if (response.status == 'success') {
-                    return res.status(201).json({
-                        status: 'success',
-                        message: 'Card added successfully.',
-                        data: response.data
-                    });
-                }
-                else {
-                    return res.status(404).json({
-                        status: 'failed',
-                        message: 'User profile not found.',
-                        data: {}
-                    });
-                }
+                const newCard = yield cardService.addCard(user, cardData);
+                res.status(201).json({
+                    status: 'success',
+                    message: 'Card added successfully.',
+                    data: newCard
+                });
             }
             catch (error) {
-                return res.status(400).json({
+                res.status(400).json({
                     status: 'failed',
                     message: 'Failed to add card.',
                     data: error.message

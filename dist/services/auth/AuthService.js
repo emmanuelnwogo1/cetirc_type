@@ -41,7 +41,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importStar(require("bcrypt"));
 const sequelize_1 = require("sequelize");
 const BusinessProfile_1 = require("../../models/BusinessProfile");
-const UserProfile_1 = require("../../models/UserProfile");
 class AuthService {
     constructor() {
         this.businessLogin = (email, password) => __awaiter(this, void 0, void 0, function* () {
@@ -87,17 +86,7 @@ class AuthService {
     }
     loginUser(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b;
-            const user = yield User_1.User.findOne({
-                where: { email },
-                include: [
-                    {
-                        model: UserProfile_1.UserProfile,
-                        as: 'userProfile',
-                        attributes: ['email', 'image']
-                    }
-                ]
-            });
+            const user = yield User_1.User.findOne({ where: { email } });
             if (!user) {
                 throw new Error('User not found');
             }
@@ -106,13 +95,6 @@ class AuthService {
                 throw new Error('Invalid credentials');
             }
             const token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET || 'default_secret', { expiresIn: '24h' });
-            const serverUrl = process.env.SERVER_URL;
-            const defaultImageUrl = `${process.env.PLACEHOLDER_IMAGE}`;
-            if (user.userProfile) {
-                user.userProfile.image = user.userProfile.image
-                    ? `${serverUrl}/api/${user.userProfile.image}`
-                    : defaultImageUrl;
-            }
             return {
                 status: 'success',
                 message: 'Login successful',
@@ -123,7 +105,7 @@ class AuthService {
                         fullName: user.first_name + user.last_name,
                         email: user.email,
                         phoneNumber: 'Not Provided',
-                        userType: 'personal',
+                        userType: 'personal', // TODO make profile picture dynamic
                         profilePicture: 'https://cetircstorage.s3.amazonaws.com/profile_images/scaled_1000025451.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA6GBMFUGOQN4ATMD4%2F20241031%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20241031T045614Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5f3760236199835aaf4fab494fa83159b723003281090b6a87ef90a176642a66',
                         token,
                         roles: ['user'],
@@ -133,10 +115,6 @@ class AuthService {
                                 email: true,
                                 sms: false,
                             },
-                        },
-                        userProfile: {
-                            email: (_a = user.userProfile) === null || _a === void 0 ? void 0 : _a.email,
-                            image: (_b = user.userProfile) === null || _b === void 0 ? void 0 : _b.image,
                         },
                     },
                 },

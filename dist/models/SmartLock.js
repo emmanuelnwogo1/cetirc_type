@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SmartLock = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const SmartLockGroup_1 = require("./SmartLockGroup");
-const Room_1 = require("./Room");
 let SmartLock = class SmartLock extends sequelize_typescript_1.Model {
 };
 exports.SmartLock = SmartLock;
@@ -37,15 +36,8 @@ __decorate([
 ], SmartLock.prototype, "group_id", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(true),
-    (0, sequelize_typescript_1.ForeignKey)(() => Room_1.Room),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER)
 ], SmartLock.prototype, "room_id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => SmartLockGroup_1.SmartLockGroup)
-], SmartLock.prototype, "smartLockGroup", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => Room_1.Room)
-], SmartLock.prototype, "room", void 0);
 exports.SmartLock = SmartLock = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'image_processing_app_smartlock', timestamps: false })
 ], SmartLock);

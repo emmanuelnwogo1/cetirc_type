@@ -18,8 +18,8 @@ const sendMail = (to, subject, text) => __awaiter(void 0, void 0, void 0, functi
     const transporter = nodemailer_1.default.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.EMAIL_HOST_USER,
-            pass: process.env.EMAIL_HOST_PASSWORD
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     });
     const mailOptions = {

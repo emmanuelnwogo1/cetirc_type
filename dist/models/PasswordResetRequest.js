@@ -34,9 +34,6 @@ __decorate([
     (0, sequelize_typescript_1.AllowNull)(true),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.DATE)
 ], PasswordResetRequest.prototype, "created_at", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => User_1.User, { foreignKey: 'user_id', as: 'user' })
-], PasswordResetRequest.prototype, "user", void 0);
 exports.PasswordResetRequest = PasswordResetRequest = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'image_processing_app_passwordresetrequest', timestamps: false })
 ], PasswordResetRequest);

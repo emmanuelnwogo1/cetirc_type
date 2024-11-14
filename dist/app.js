@@ -8,7 +8,6 @@ dotenv_1.default.config();
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const database_1 = __importDefault(require("./config/database"));
 const businessRoutes_1 = __importDefault(require("./routes/businessRoutes"));
@@ -24,7 +23,6 @@ const notificationRoutes_1 = __importDefault(require("./routes/notificationRoute
 const roomRoutes_1 = __importDefault(require("./routes/roomRoutes"));
 const groupRoutes_1 = __importDefault(require("./routes/groupRoutes"));
 const withdrawCodeRoutes_1 = __importDefault(require("./routes/withdrawCodeRoutes"));
-const businessPaymentRoutes_1 = __importDefault(require("./routes/businessPaymentRoutes"));
 const app = (0, express_1.default)();
 dotenv_1.default.config();
 app.use((0, cors_1.default)());
@@ -44,16 +42,5 @@ app.use('/api', roomRoutes_1.default);
 app.use('/api', notificationRoutes_1.default);
 app.use('/api', groupRoutes_1.default);
 app.use('/api', withdrawCodeRoutes_1.default);
-app.use('/api', businessPaymentRoutes_1.default);
-app.get('/api/stripe/card-form', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, 'assets/stripe/card_form.html'));
-});
-// crud routes
-const crudDir = path_1.default.join(__dirname, './crud');
-fs_1.default.readdirSync(crudDir).forEach((file) => {
-    const modelName = file.replace('.ts', '');
-    const crudRoutes = require(path_1.default.join(crudDir, file)).default;
-    app.use(`/api/admin/${modelName}s`, crudRoutes);
-});
 database_1.default.sync();
 exports.default = app;

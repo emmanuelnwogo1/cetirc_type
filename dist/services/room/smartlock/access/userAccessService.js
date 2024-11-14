@@ -13,6 +13,7 @@ exports.updateUserAccess = void 0;
 const UserSmartLockAccess_1 = require("../../../../models/UserSmartLockAccess");
 const updateUserAccess = (userId, data, currentUser) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(userId, data, currentUser);
         const accessRecord = yield UserSmartLockAccess_1.UserSmartLockAccess.findOne({
             where: { user_id: userId, granted_by_id: currentUser.id },
         });

@@ -11,13 +11,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CardService = void 0;
 const Card_1 = require("../../models/Card");
+const User_1 = require("../../models/User");
 const UserProfile_1 = require("../../models/UserProfile");
 class CardService {
     constructor() {
         this.updateCard = (cardId, data, userId) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const card = yield Card_1.Card.findOne({
-                    where: { id: cardId }
+                    where: { id: cardId, user_profile_id: userId }
                 });
                 if (!card) {
                     return {
@@ -43,7 +44,7 @@ class CardService {
         });
         this.getUserCards = (userId) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const userProfile = yield UserProfile_1.UserProfile.findOne({ where: { username_id: userId } });
+                const userProfile = yield UserProfile_1.UserProfile.findOne({ where: { id: userId } });
                 if (!userProfile) {
                     return {
                         status: "error",
@@ -51,11 +52,19 @@ class CardService {
                         data: {}
                     };
                 }
-                const cards = yield Card_1.Card.findAll({ where: { user_profile_id: userProfile.id } });
+                // Fetch cards associated with the user profile
+                const cards = yield Card_1.Card.findAll({ where: { user_profile_id: userId } });
+                const cardData = cards.map(card => ({
+                    id: card.id,
+                    name: card.name,
+                    card_number: card.card_number,
+                    expiration_month_year: card.expiration_month_year,
+                    cvv: card.cvv
+                }));
                 return {
                     status: "success",
                     message: "Cards retrieved successfully.",
-                    data: cards
+                    data: cardData
                 };
             }
             catch (error) {
@@ -69,22 +78,13 @@ class CardService {
     }
     addCard(user, cardData) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(user.id);
-            const userProfile = yield UserProfile_1.UserProfile.findOne({ where: { username_id: user.id } });
+            const userProfile = yield User_1.User.findOne({ where: { username: user.username } });
             if (!userProfile) {
-                return {
-                    status: "failed",
-                    message: "User profile not found.",
-                    data: {}
-                };
+                throw new Error('User profile not found');
             }
             // Create the card
             const newCard = yield Card_1.Card.create(Object.assign(Object.assign({}, cardData), { user_profile_id: userProfile.id }));
-            return {
-                status: "success",
-                message: "Card added successfully.",
-                data: newCard
-            };
+            return newCard;
         });
     }
 }

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.createUser = exports.getUserById = exports.getUsers = exports.updateUserProfilePhoto = exports.getUserProfileDetails = exports.updateUserProfile = void 0;
+exports.updateUserProfilePhoto = exports.getUserProfileDetails = exports.updateUserProfile = void 0;
 const UserProfile_1 = require("../../models/UserProfile");
 const User_1 = require("../../models/User");
 const path_1 = __importDefault(require("path"));
@@ -85,6 +85,7 @@ const updateUserProfilePhoto = (userId, image) => __awaiter(void 0, void 0, void
                 data: {},
             };
         }
+        console.log(image.path);
         const imageBuffer = yield fs_1.default.promises.readFile(image.path);
         const user = yield User_1.User.findOne({ where: { id: userId } });
         if (!user) {
@@ -128,24 +129,3 @@ const updateUserProfilePhoto = (userId, image) => __awaiter(void 0, void 0, void
     }
 });
 exports.updateUserProfilePhoto = updateUserProfilePhoto;
-const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield User_1.User.findAll();
-});
-exports.getUsers = getUsers;
-const getUserById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield User_1.User.findByPk(id);
-});
-exports.getUserById = getUserById;
-const createUser = (userData) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = new User_1.User(userData);
-    return yield newUser.save();
-});
-exports.createUser = createUser;
-const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield User_1.User.destroy({
-        where: {
-            id: parseInt(id)
-        }
-    });
-});
-exports.deleteUser = deleteUser;

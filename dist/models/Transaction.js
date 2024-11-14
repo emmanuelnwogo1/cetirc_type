@@ -25,7 +25,7 @@ __decorate([
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.DATE)
-], Transaction.prototype, "transaction_date", void 0);
+], Transaction.prototype, "transactionDate", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.BOOLEAN)
@@ -45,9 +45,6 @@ __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER)
 ], Transaction.prototype, "user_id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => User_1.User)
-], Transaction.prototype, "user", void 0);
 exports.Transaction = Transaction = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'image_processing_app_transaction', timestamps: false })
 ], Transaction);

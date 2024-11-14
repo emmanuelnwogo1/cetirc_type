@@ -31,12 +31,6 @@ __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.DECIMAL)
 ], PalmShare.prototype, "max_amount", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => User_1.User, { foreignKey: 'owner_id', as: 'owner' })
-], PalmShare.prototype, "owner", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => User_1.User, { foreignKey: 'allowed_user_id', as: 'allowedUser' })
-], PalmShare.prototype, "allowedUser", void 0);
 exports.PalmShare = PalmShare = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'image_processing_app_palmshare', timestamps: false })
 ], PalmShare);

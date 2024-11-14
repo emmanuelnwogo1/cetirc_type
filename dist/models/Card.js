@@ -18,25 +18,26 @@ __decorate([
 ], Card.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING)
+], Card.prototype, "name", void 0);
+__decorate([
+    (0, sequelize_typescript_1.AllowNull)(false),
+    (0, sequelize_typescript_1.Length)({ min: 16, max: 16 }),
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING(16))
+], Card.prototype, "card_number", void 0);
+__decorate([
+    (0, sequelize_typescript_1.AllowNull)(false),
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER)
+], Card.prototype, "expiration_month_year", void 0);
+__decorate([
+    (0, sequelize_typescript_1.AllowNull)(false),
+    (0, sequelize_typescript_1.Length)({ min: 3, max: 3 }),
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING(3))
+], Card.prototype, "cvv", void 0);
+__decorate([
+    (0, sequelize_typescript_1.AllowNull)(false),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER)
 ], Card.prototype, "user_profile_id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.AllowNull)(true),
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING)
-], Card.prototype, "stripe_payment_method_id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.AllowNull)(false),
-    (0, sequelize_typescript_1.Length)({ max: 50 }),
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING)
-], Card.prototype, "brand", void 0);
-__decorate([
-    (0, sequelize_typescript_1.AllowNull)(false),
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING(4))
-], Card.prototype, "last_four_digits", void 0);
-__decorate([
-    (0, sequelize_typescript_1.AllowNull)(true),
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.BOOLEAN)
-], Card.prototype, "is_default", void 0);
 exports.Card = Card = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'image_processing_app_card', timestamps: false })
 ], Card);

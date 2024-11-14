@@ -1,6 +1,6 @@
 .env
 node_modules/
-
+src/
 # Ignore all files in the images directory
 images/*
 business_images/*

@@ -43,4 +43,10 @@ app.use('/api', notificationRoutes_1.default);
 app.use('/api', groupRoutes_1.default);
 app.use('/api', withdrawCodeRoutes_1.default);
 database_1.default.sync();
+
+const PORT = process.env.PORT || 9000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
 exports.default = app;
